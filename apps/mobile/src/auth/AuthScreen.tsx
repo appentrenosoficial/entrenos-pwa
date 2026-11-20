@@ -1,8 +1,9 @@
 import { ReferenceLogin } from "../brand/ReferenceLogin";
 import { useState, useEffect } from "react";
-import { Text } from "react-native";
+import { Platform, Text, useWindowDimensions } from "react-native";
 import { useRouter } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
+import { DesktopSignup } from "../brand/DesktopSignup";
 import { passwordSchema, emailSchema } from "@entrenos/shared";
 import {
   supabase,
@@ -18,6 +19,7 @@ import { accountError } from "../features/account/api";
 WebBrowser.maybeCompleteAuthSession();
 type Mode = "login" | "signup" | "forgot";
 export function AuthScreen() {
+  const { width } = useWindowDimensions();
   const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -186,6 +188,22 @@ export function AuthScreen() {
         onForgot={() => change("forgot")}
         onSignup={() => change("signup")}
         onResend={resend}
+      />
+    );
+  if (mode === "signup" && Platform.OS === "web" && width >= 960)
+    return (
+      <DesktopSignup
+        email={email}
+        password={password}
+        busy={busy}
+        disabled={!supabase}
+        error={error}
+        notice={notice}
+        onEmail={setEmail}
+        onPassword={setPassword}
+        onSubmit={submit}
+        onResend={resend}
+        onLogin={() => change("login")}
       />
     );
   return (

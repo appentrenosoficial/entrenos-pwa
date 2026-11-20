@@ -1,0 +1,21 @@
+.env*
+node_modules/
+apps/mobile/android/
+apps/mobile/ios/
+apps/mobile/dist/
+apps/admin/.next/
+apps/admin/.env*
+Fatura de outubro.pdf
+WhatsApp Video*.mp4
+1.jpeg
+2.jpeg
+3.jpeg
+4.jpeg
+5.jpeg
+bianca.png
+jona.png
+nova.png
+logoentre.jpeg
+carregamento antes do login.png
+visualcorretologin.png
+info*.txt

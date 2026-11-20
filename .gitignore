@@ -14,4 +14,3 @@ supabase/.temp/
 supabase/.branches/
 .DS_Store
 .vercel
-.env*

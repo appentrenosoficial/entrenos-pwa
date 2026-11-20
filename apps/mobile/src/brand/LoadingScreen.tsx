@@ -8,7 +8,9 @@ import {
   View,
   Text,
   Pressable,
+  useWindowDimensions,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { artwork, REFERENCE_WIDTH, REFERENCE_HEIGHT } from "./artwork";
 import { ReferenceScene, LOADING_SLICES } from "./ReferenceScene";
 export function LoadingScreen({
@@ -22,6 +24,7 @@ export function LoadingScreen({
   error?: string | null;
   onRetry?: () => void;
 }) {
+  const { width } = useWindowDimensions();
   const rotation = useRef(new Animated.Value(0)).current;
   const [painted, setPainted] = useState(Platform.OS === "web");
   useEffect(() => {
@@ -56,6 +59,15 @@ export function LoadingScreen({
       rest.stop();
     };
   }, [rotation, painted, onFirstCycle]);
+  if (Platform.OS === "web" && width >= 960)
+    return (
+      <DesktopLoading
+        rotation={rotation}
+        error={error}
+        onRetry={onRetry}
+        onArtworkLoad={onArtworkLoad}
+      />
+    );
   return (
     <View
       style={StyleSheet.absoluteFill}
@@ -157,3 +169,173 @@ export function LoadingScreen({
     </View>
   );
 }
+
+function DesktopLoading({
+  rotation,
+  error,
+  onRetry,
+  onArtworkLoad,
+}: {
+  rotation: Animated.Value;
+  error?: string | null;
+  onRetry?: () => void;
+  onArtworkLoad?: () => void;
+}) {
+  return (
+    <View
+      style={StyleSheet.absoluteFill}
+      accessibilityLabel="EntreNós. Carregando o aplicativo."
+      accessibilityRole="progressbar"
+    >
+      <LinearGradient
+        colors={["#080511", "#13091f", "#090511"]}
+        locations={[0, 0.52, 1]}
+        style={StyleSheet.absoluteFill}
+      />
+      <View pointerEvents="none" style={desktopStyles.glowTop} />
+      <View pointerEvents="none" style={desktopStyles.glowBottom} />
+      <View style={desktopStyles.center}>
+        <View style={desktopStyles.brand}>
+          <Image
+            source={artwork.symbol}
+            accessible={false}
+            resizeMode="contain"
+            onLoad={onArtworkLoad}
+            style={desktopStyles.symbol}
+          />
+          <Image
+            source={artwork.wordmark}
+            accessible={false}
+            resizeMode="contain"
+            style={desktopStyles.wordmark}
+          />
+        </View>
+        <View style={desktopStyles.agePill}>
+          <Text style={desktopStyles.ageText}>18+</Text>
+          <View style={desktopStyles.ageDivider} />
+          <Text style={desktopStyles.ageCaption}>REDE SOCIAL PARA ADULTOS</Text>
+        </View>
+        <View style={desktopStyles.loadingGroup}>
+          <Animated.View
+            style={[
+              desktopStyles.spinner,
+              {
+                transform: [
+                  {
+                    rotate: rotation.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: ["0deg", "360deg"],
+                    }),
+                  },
+                ],
+              },
+            ]}
+          />
+          <Text style={desktopStyles.loadingText}>Carregando...</Text>
+        </View>
+        <Text style={desktopStyles.footer}>
+          Conexões reais começam com respeito.
+        </Text>
+        {error && (
+          <View style={desktopStyles.errorBox}>
+            <Text accessibilityRole="alert" style={desktopStyles.errorText}>
+              {error}
+            </Text>
+            <Pressable
+              onPress={onRetry}
+              accessibilityRole="button"
+              style={desktopStyles.retryButton}
+            >
+              <Text style={desktopStyles.retryText}>Tentar novamente</Text>
+            </Pressable>
+          </View>
+        )}
+      </View>
+    </View>
+  );
+}
+
+const desktopStyles = StyleSheet.create({
+  center: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 40,
+  },
+  glowTop: {
+    position: "absolute",
+    top: -300,
+    left: -240,
+    width: 820,
+    height: 820,
+    borderRadius: 410,
+    backgroundColor: "rgba(180, 0, 220, 0.12)",
+    shadowColor: "#d000d5",
+    shadowOpacity: 0.55,
+    shadowRadius: 130,
+  },
+  glowBottom: {
+    position: "absolute",
+    right: -300,
+    bottom: -440,
+    width: 920,
+    height: 920,
+    borderRadius: 460,
+    backgroundColor: "rgba(218, 0, 120, 0.10)",
+    shadowColor: "#f500a6",
+    shadowOpacity: 0.5,
+    shadowRadius: 140,
+  },
+  brand: {
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 22,
+    marginBottom: 34,
+  },
+  symbol: { width: 168, height: 108 },
+  wordmark: { width: 340, height: 64 },
+  agePill: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 14,
+    borderWidth: 1,
+    borderColor: "rgba(225, 74, 219, 0.42)",
+    borderRadius: 24,
+    backgroundColor: "rgba(28, 15, 39, 0.8)",
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+  },
+  ageText: { color: "#fff", fontSize: 13, fontWeight: "800", letterSpacing: 0.8 },
+  ageDivider: { width: 1, height: 18, backgroundColor: "#6e587c" },
+  ageCaption: { color: "#c8b8d3", fontSize: 11, fontWeight: "700", letterSpacing: 1.8 },
+  loadingGroup: { alignItems: "center", gap: 18, marginTop: 56 },
+  spinner: {
+    width: 58,
+    height: 58,
+    borderWidth: 5,
+    borderRadius: 29,
+    borderColor: "rgba(214, 42, 217, 0.22)",
+    borderTopColor: "#ec19bc",
+    borderRightColor: "#8c2de9",
+  },
+  loadingText: { color: "#f7f1fa", fontSize: 18, fontWeight: "600", letterSpacing: 0.2 },
+  footer: { color: "#94869e", fontSize: 13, marginTop: 45, letterSpacing: 0.3 },
+  errorBox: {
+    maxWidth: 520,
+    marginTop: 26,
+    padding: 18,
+    alignItems: "center",
+    gap: 8,
+    borderWidth: 1,
+    borderColor: "rgba(255, 102, 158, 0.25)",
+    borderRadius: 14,
+    backgroundColor: "rgba(22, 11, 35, 0.94)",
+  },
+  errorText: { color: "#fff", textAlign: "center", lineHeight: 20 },
+  retryButton: { paddingHorizontal: 12, paddingVertical: 8 },
+  retryText: { color: "#ff24c5", textAlign: "center", fontWeight: "700" },
+});

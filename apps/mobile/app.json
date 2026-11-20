@@ -1,0 +1,65 @@
+{
+  "expo": {
+    "name": "EntreNós",
+    "slug": "entrenos",
+    "version": "0.1.0",
+    "scheme": "entrenos",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#090210",
+    "android": {
+      "package": "com.entrenos.app",
+      "icon": "./assets/brand/icon.png",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/brand/adaptive-icon.png",
+        "backgroundColor": "#080511"
+      },
+      "softwareKeyboardLayoutMode": "resize"
+    },
+    "ios": {
+      "bundleIdentifier": "com.entrenos.app",
+      "supportsTablet": true
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single",
+      "favicon": "./assets/brand/icon.png",
+      "name": "EntreNós",
+      "shortName": "EntreNós",
+      "themeColor": "#090210",
+      "backgroundColor": "#090210"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Permita selecionar uma foto para seu perfil EntreNós.",
+          "cameraPermission": false,
+          "microphonePermission": false
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#090210",
+          "image": "./assets/brand/icon.png",
+          "imageWidth": 190
+        }
+      ],
+      [
+        "expo-dev-client",
+        {
+          "toolsButton": false,
+          "showMenuAtLaunch": false,
+          "skipOnboarding": true
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "icon": "./assets/brand/icon.png"
+  }
+}

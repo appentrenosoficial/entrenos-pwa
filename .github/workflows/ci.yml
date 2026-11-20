@@ -1,0 +1,38 @@
+name: Verificações
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install --global npm@11.13.0
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build:admin
+      - run: npm run export:android
+      - run: npx expo install --check
+        working-directory: apps/mobile
+  database:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install --global npm@11.13.0
+      - run: npm ci
+      - run: npm run supabase:start
+      - run: npm run supabase:reset
+      - run: npm run test:db
+      - run: npm run test:auth
+      - run: npm run supabase:stop
+        if: always()

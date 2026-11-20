@@ -1,0 +1,2 @@
+-- Sem fixtures de usuários ou conteúdo nesta etapa.
+-- Nenhum dado pessoal, selfie ou credencial é versionado.

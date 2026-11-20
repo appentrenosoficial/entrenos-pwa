@@ -1,0 +1,20 @@
+begin;
+create extension if not exists pgtap with schema extensions;
+set local search_path = public, extensions;
+select plan(9);
+select has_schema('app_private', 'Schema interno existe');
+select ok(not has_schema_privilege('anon', 'app_private', 'USAGE'), 'anon sem acesso interno');
+select ok(not has_schema_privilege('authenticated', 'app_private', 'USAGE'), 'authenticated sem acesso interno');
+-- Objetos transacionais provam os privilégios padrão sem expor novas tabelas.
+create table public._foundation_privilege_probe (id bigint primary key);
+alter table public._foundation_privilege_probe enable row level security;
+create function public._foundation_probe() returns integer language sql as $$ select 1 $$;
+create function app_private._foundation_probe() returns integer language sql as $$ select 1 $$;
+select ok(not has_table_privilege('anon', 'public._foundation_privilege_probe', 'SELECT'), 'anon sem grant automático');
+select ok(not has_table_privilege('authenticated', 'public._foundation_privilege_probe', 'SELECT'), 'authenticated sem grant automático');
+select ok(not has_function_privilege('anon', 'public._foundation_probe()', 'EXECUTE'), 'funções sem execução pública automática');
+select ok(not has_function_privilege('authenticated', 'public._foundation_probe()', 'EXECUTE'), 'authenticated sem execução automática');
+select ok(not has_function_privilege('anon', 'app_private._foundation_probe()', 'EXECUTE'), 'funções internas sem execução automática');
+select ok(has_function_privilege('postgres', 'public._foundation_probe()', 'EXECUTE'), 'proprietário mantém execução');
+select * from finish();
+rollback;

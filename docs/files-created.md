@@ -1,0 +1,61 @@
+# Arquivos criados — Etapa 1
+
+55 arquivos de código, configuração, testes e documentação. Os dois
+documentos originais foram preservados. Dependências e arquivos gerados de
+build/cache não fazem parte deste inventário.
+
+- `.env.example`
+- `.github/workflows/ci.yml`
+- `.gitignore`
+- `.npmrc`
+- `.nvmrc`
+- `README.md`
+- `apps/admin/.env.example`
+- `apps/admin/next-env.d.ts`
+- `apps/admin/next.config.ts`
+- `apps/admin/package.json`
+- `apps/admin/src/app/globals.css`
+- `apps/admin/src/app/layout.tsx`
+- `apps/admin/src/app/page.tsx`
+- `apps/admin/src/lib/environment.ts`
+- `apps/admin/tsconfig.json`
+- `apps/mobile/.env.example`
+- `apps/mobile/app.json`
+- `apps/mobile/app/(tabs)/_layout.tsx`
+- `apps/mobile/app/(tabs)/chat.tsx`
+- `apps/mobile/app/(tabs)/create.tsx`
+- `apps/mobile/app/(tabs)/explore.tsx`
+- `apps/mobile/app/(tabs)/index.tsx`
+- `apps/mobile/app/(tabs)/profile.tsx`
+- `apps/mobile/app/+not-found.tsx`
+- `apps/mobile/app/[section].tsx`
+- `apps/mobile/app/_layout.tsx`
+- `apps/mobile/eas.json`
+- `apps/mobile/expo-env.d.ts`
+- `apps/mobile/package.json`
+- `apps/mobile/src/components/primitives.tsx`
+- `apps/mobile/src/lib/supabase.ts`
+- `apps/mobile/tsconfig.json`
+- `docs/api-contracts.md`
+- `docs/architecture.md`
+- `docs/decisions.md`
+- `docs/files-created.md`
+- `docs/security.md`
+- `docs/validation.md`
+- `eslint.config.mjs`
+- `package-lock.json`
+- `package.json`
+- `packages/shared/package.json`
+- `packages/shared/src/config.test.ts`
+- `packages/shared/src/index.ts`
+- `packages/shared/tsconfig.json`
+- `packages/ui/package.json`
+- `packages/ui/src/index.ts`
+- `packages/ui/tsconfig.json`
+- `supabase/config.toml`
+- `supabase/functions/README.md`
+- `supabase/migrations/20261115000100_foundation.sql`
+- `supabase/migrations/20261115000200_function_default_privileges.sql`
+- `supabase/seed.sql`
+- `supabase/tests/foundation.test.sql`
+- `vitest.config.mts`

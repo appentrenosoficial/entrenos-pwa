@@ -1,0 +1,39 @@
+{
+  "name": "entrenos",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22.13.0",
+    "npm": ">=11"
+  },
+  "scripts": {
+    "mobile": "npm run start -w @entrenos/mobile",
+    "android": "npm run android -w @entrenos/mobile",
+    "admin": "npm run dev -w @entrenos/admin",
+    "build:web": "npm run build:web -w @entrenos/mobile",
+    "lint": "eslint .",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "vitest run",
+    "check": "npm run lint && npm run typecheck && npm test",
+    "build:admin": "npm run build -w @entrenos/admin",
+    "export:android": "npm run export:android -w @entrenos/mobile",
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:reset": "supabase db reset",
+    "test:db": "supabase test db",
+    "test:auth": "node scripts/test-auth-local.mjs"
+  },
+  "devDependencies": {
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.4.6",
+    "supabase": "3.1.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.0.0",
+    "vitest": "^4.0.0"
+  },
+  "packageManager": "npm@11.13.0"
+}

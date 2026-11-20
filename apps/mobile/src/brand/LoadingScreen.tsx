@@ -89,13 +89,13 @@ export function LoadingScreen({
               source={artwork.symbol}
               accessible={false}
               resizeMode="contain"
-              style={box(321, 485, 300, 194)}
+              style={box(150, 640, 230, 149)}
             />
             <Image
               source={artwork.wordmark}
               accessible={false}
               resizeMode="contain"
-              style={box(170, 720, 600, 110)}
+              style={box(410, 678, 380, 70)}
             />
             <Animated.View
               pointerEvents="none"
@@ -291,13 +291,14 @@ const desktopStyles = StyleSheet.create({
     shadowRadius: 140,
   },
   brand: {
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 22,
+    gap: 20,
     marginBottom: 34,
   },
-  symbol: { width: 168, height: 108 },
-  wordmark: { width: 340, height: 64 },
+  symbol: { width: 112, height: 73 },
+  wordmark: { width: 310, height: 57 },
   agePill: {
     flexDirection: "row",
     alignItems: "center",

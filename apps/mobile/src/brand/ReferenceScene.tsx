@@ -41,11 +41,11 @@ const LOGIN_SLICES: Slice[] = [
 ];
 export const LOADING_SLICES: Slice[] = [
   { from: 80, to: 460, grow: 0 },
-  { from: 460, to: 480, grow: 0.3 },
+  { from: 460, to: 480, grow: 0 },
   { from: 480, to: 980, grow: 0 },
-  { from: 980, to: 1110, grow: 0.4 },
+  { from: 980, to: 1110, grow: 0 },
   { from: 1110, to: 1310, grow: 0 },
-  { from: 1310, to: 1672, grow: 0.3 },
+  { from: 1310, to: 1672, grow: 1 },
 ];
 // As artes permanecem intactas. Em telas mais altas, só os intervalos decorativos
 // recebem espaço extra; logo, letras e controles não são esticados.
